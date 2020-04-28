@@ -1,14 +1,11 @@
 package main
 
-import "fmt"
-
 func main() {
-	cards := []string{newCard(), newCard(), "Ace of Diamonds"} // slices
-	cards = append(cards, "Six of Spades")
+	cards := newDeck()
+	hand, remainingCards := deal(cards, 5)
 
-	for i, card := range cards {
-		fmt.Println(i, card)
-	}
+	hand.print()
+	remainingCards.print()
 }
 
 func newCard() string {
