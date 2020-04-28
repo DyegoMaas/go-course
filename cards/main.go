@@ -3,9 +3,14 @@ package main
 import "fmt"
 
 func main() {
-	// var card string = "Ace of Spades"
-	card := "Ace of Spades"   // declaring new variable with inferred type
-	card = "Five of Diamonds" // reassigning value to it
+	cards := []string{newCard(), newCard(), "Ace of Diamonds"} // slices
+	cards = append(cards, "Six of Spades")
 
-	fmt.Println(card)
+	for i, card := range cards {
+		fmt.Println(i, card)
+	}
+}
+
+func newCard() string {
+	return "Five of Diamonds"
 }
