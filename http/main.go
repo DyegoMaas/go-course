@@ -7,14 +7,11 @@ import (
 	"os"
 )
 
-type doer interface {
-	doStuff()
-}
+type logWriter struct{}
 
-type myTest struct{}
-
-func (myTest) doStuff() {
-	fmt.Println("Doing some stuff...")
+func (w logWriter) Write(bs []byte) (int, error) {
+	fmt.Println(string(bs))
+	return len(bs), nil
 }
 
 func main() {
@@ -24,23 +21,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	// bodyData := make([]byte, 99999)
-	// resp.Body.Read(bodyData)
-	// fmt.Println("Response:", string(bodyData))
-	printBody(*resp)
-
-	io.Copy(os.Stdout, resp.Body)
-
-	t := myTest{}
-	doSomething(t)
-}
-
-func doSomething(d doer) {
-	d.doStuff()
-}
-
-func printBody(resp http.Response) {
-	bodyData := make([]byte, 99999)
-	resp.Body.Read(bodyData)
-	fmt.Println("Response:", string(bodyData))
+	lw := logWriter{}
+	io.Copy(lw, resp.Body)
 }
